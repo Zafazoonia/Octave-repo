@@ -32,12 +32,22 @@ tActual = table((1:numGaussians)', amplitudes(:), centers(:), sigmas(:), 'Variab
 % Now sort parameters in order of increasing mean, just so it's easier to think about (though it's not required).
 tActual = sortrows(tActual, 3);
 tActual.Number = (1:numGaussians)' % Unsort the first column of numbers.
-
+M=dlmread("tofit.txt");
+AS=size(M);
+U=AS(1);
+for i = 1:U
+    if M(i,1)>0
+        break;
+    end
+end
+L=i;
+Sub=M(L:U,1:2);
 % Sum up the component curves to make our test signal that we will analyze to try to guess the component curves from.
 legendStrings = cell(numGaussians, 1);
 for k = 1 : numGaussians
 	thisGaussian = tActual.Amplitude(k) * gaussian(x, tActual.Mean(k), tActual.Width(k));
 	y = y + thisGaussian;
+    y=exp(-(x-50).^2);
 	plot(x, thisGaussian, '-', 'LineWidth', 1);
 	hold on;
 	legendStrings{k} = sprintf('Actual Gaussian %d', k);
@@ -47,7 +57,8 @@ end
 % Optional: Add a tiny bit of noise.
 noiseAmplitude = 0.03 * max(y);	% Add 3% noise.
 y = y + noiseAmplitude * (rand(size(y)) - 0.5);
-
+y=Sub(:,2);
+x=Sub(:,1);
 % Plot initial starting signal (the sum of the Gaussians).
 hFig.WindowState = 'maximized';
 hFig.Name = 'Original component curves summed together to form random test signal';
