@@ -47,7 +47,7 @@ legendStrings = cell(numGaussians, 1);
 for k = 1 : numGaussians
 	thisGaussian = tActual.Amplitude(k) * gaussian(x, tActual.Mean(k), tActual.Width(k));
 	y = y + thisGaussian;
-    y=exp(-(x-50).^2);
+    %y=exp(-(x-50).^2);
 	plot(x, thisGaussian, '-', 'LineWidth', 1);
 	hold on;
 	legendStrings{k} = sprintf('Actual Gaussian %d', k);
@@ -57,8 +57,9 @@ end
 % Optional: Add a tiny bit of noise.
 noiseAmplitude = 0.03 * max(y);	% Add 3% noise.
 y = y + noiseAmplitude * (rand(size(y)) - 0.5);
-y=Sub(:,2);
+y=smooth(smooth(Sub(:,2)));
 x=Sub(:,1);
+P=findpeaks(y);
 % Plot initial starting signal (the sum of the Gaussians).
 hFig.WindowState = 'maximized';
 hFig.Name = 'Original component curves summed together to form random test signal';
