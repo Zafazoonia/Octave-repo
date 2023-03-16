@@ -1,4 +1,4 @@
-function xrr(filename, lwr=0, upr=10.0)
+function xrr2(filename, lwr=0, upr=10.0)
   M=dlmread(filename);
   Sub=M(:,1);
   L=find(Sub==lwr);
@@ -10,8 +10,9 @@ function xrr(filename, lwr=0, upr=10.0)
   Suby1=M(L:U,3);
   Suby=((Suby0.*Suby1));
   h=figure("visible","on");
-  %dx = Subx(2)-Subx(1);
-
+  dx = Subx(2)-Subx(1);
+  Maxval=Subx(U-L)-Subx(1);
+  k=2*pi/(dx*Maxval);
 
 
   subplot(2,1,1);
@@ -19,11 +20,11 @@ semilogy(Subx,Suby);
  subplot(2,1,2);
  SubFFT=abs(fft(Suby));
   [pks idx] = findpeaks(SubFFT,"MinPeakDistance",10);
-  k=1:1:size(SubFFT)(1);
- plot(k',SubFFT,k'(idx),SubFFT(idx),"xm");
+  %k=1:1:size(SubFFT)(1);
+ plot(k*Subx,SubFFT,k*Subx(idx),SubFFT(idx),"xm");
   %plot(k',SubFFT);
   for i=1:size(idx)
-    text(k'(idx(i)),pks(i),num2str(k'(idx(i))),"fontsize",9);
+    text(k*Subx(idx(i)),pks(i),num2str(k*Subx(idx(i))),"fontsize",9);
   endfor
   %text (Sub, 0.7, "arbitrary text");
   xlabel("2-theta (degrees)");
