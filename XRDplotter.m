@@ -8,7 +8,7 @@ Y=M(L:U,2).*M(L:U,3);
 h=figure("visible","on");
 %dx = X(2)-X(1);
 [pks idx] = findpeaks(Y,"MinPeakDistance",300);
-
+data=[pks idx];
 if (max(Y)<10000)
 plot(X,Y,1);
 hold on;
@@ -27,4 +27,7 @@ endif
  printname=filename(1:(size(filename)(2)-4));
  title({"XRD";printname});
  print(h,printname,"-dpng");
+ csvname=strcat(printname,'peak-data.csv');
+dlmwrite(csvname, data);
+
 endfunction
