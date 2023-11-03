@@ -8,7 +8,7 @@ Y=M(L:U,2).*M(L:U,3);
 h=figure("visible","on");
 %dx = X(2)-X(1);
 [pks idx] = findpeaks(Y,"MinPeakDistance",300);
-data=[pks idx];
+data=[pks X(idx)];
 if (max(Y)<10000)
 plot(X,Y,1);
 hold on;
