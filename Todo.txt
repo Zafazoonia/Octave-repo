@@ -1,0 +1,2 @@
+absorbance file modification for any enty
+electrical file plotter
