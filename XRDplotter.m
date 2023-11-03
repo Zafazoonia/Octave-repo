@@ -26,7 +26,8 @@ endif
  %[filepath,name,ext] = fileparts(filename);
  printname=filename(1:(size(filename)(2)-4));
  title({"XRD";printname});
- print(h,printname,"-dpng");
+  pngname=strcat(printname,'.png');
+ print(h,pngname,"-dpng");
  csvname=strcat(printname,'peak-data.csv');
 dlmwrite(csvname, data);
 
