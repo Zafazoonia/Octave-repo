@@ -5,7 +5,7 @@ U=find(M(:,1),1,'last');
 X=M(L:U,1);
 Y=M(L:U,2).*M(L:U,3);
 
-h=figure("visible","on");
+h=figure("visible","off");
 %dx = X(2)-X(1);
 [pks idx] = findpeaks(Y,"MinPeakDistance",300);
 data=[pks X(idx)];
